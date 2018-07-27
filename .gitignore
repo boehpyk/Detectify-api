@@ -1,0 +1,7 @@
+/vendor
+/var/cache
+/var/logs
+/web/uplds
+/.idea
+/config/prod.php
+/web/test.php

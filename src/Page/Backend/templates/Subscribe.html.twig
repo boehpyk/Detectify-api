@@ -1,0 +1,25 @@
+<h1>Подписчики</h1>
+
+<form action="" enctype="multipart/form-data" method="post" class="form">
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Редактировать подписчиков</div>
+        <div class="panel-body">
+            <table class="text-parts-table table table-bordered">
+                {% for subscribe in subscribes %}
+                <tr>
+                    <td>{{ subscribe.email }}{% if subscribe.is_active == 'no' %} <span style="font-size: 12px; color: darkred">(не подтвержден)</span>{% endif %}</td>
+                    <td><input value="yes" name="delete[{{ subscribe.id }}]" type="checkbox" class="subdep-manage" data-role="delete" /></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <input value="Внести изменения" name="Update" type="submit" class="btn btn-info" />
+</form>
+
+<br /><br /><br />
+
+<form action="" method="post" class="form">
+    <input value="Экспортировать данные" name="Export" type="submit" class="btn btn-info" />
+</form>

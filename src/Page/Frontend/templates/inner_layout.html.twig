@@ -1,0 +1,184 @@
+{% macro menu_links(mainmenu) %}
+    {% import _self as macros %}
+    {% for link in mainmenu %}
+        <li>
+            <a href="{% if global.debug %}/index_dev.php{% endif %}{{ link.url }}">
+                {{ link.title }}
+                {% if link.children is defined and link.children | length > 0 %}
+                    <span class="sub-arrow"></span>
+                {% endif %}
+            </a>
+            {% if link.children is defined and link.children | length > 0 %}
+                <ul class="level{{ link.level }}">
+                    {{ macros.menu_links(link.children) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% import _self as macros %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ article.meta_description }}" />
+    <meta name="keywords" content="{{ article.meta_description }}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- jQuery -->
+    <script src="/assets/jvscrpts/vendor/jquery-1.12.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/assets/jvscrpts/vendor/jquery.cookie.js"></script>
+
+    <!-- SmartMenus core CSS (required) -->
+    <link href='/assets/stlshts/vendor/sm-core-css.css' rel='stylesheet' type='text/css' />
+    <link href='/assets/stlshts/vendor/sm-simple.css' rel='stylesheet' type='text/css' />
+
+
+    <link href="/assets/stlshts/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/stlshts/styles.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/stlshts/menu.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/stlshts/vendor/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/stlshts/vision-choice.css" rel="stylesheet" type="text/css">
+    <link href="/assets/stlshts/vision.css" rel="stylesheet" type="text/css">
+
+
+
+</head>
+<body class="inner">
+
+<div id="main-menu">
+    <div class="main-menu-top">
+        <div class="menu-home">
+            <a href="/"><img src="/assets/pctrs/menu_home_icon.png" border="0" /></a>
+        </div>
+        <div class="menu-close">
+            <a href="javascript:;" class="close-btn"><img src="/assets/pctrs/close_cross.png" border="0" /></a>
+        </div>
+        <div class="menu-title">
+            Меню
+        </div>
+        <div class="menu-lang">
+            <select>
+                <option value="rus">По русски</option>
+                <option value="eng">English</option>
+            </select>
+        </div>
+    </div>
+    <ul>
+        {{ macros.menu_links(mainmenu) }}
+    </ul>
+    <div class="height-20"></div>
+</div>
+
+<div class="inner-bgr" style="background-image: url({% if article is not null and article.id != 94 %}'/uplds/{{ article.root_id }}/dropdown_image_{{ article.root_id }}.jpg'{% else %}'/assets/pctrs/top_museum.jpg'{% endif %});"></div>
+
+<section class="top inner row">
+    <div class="container align-center">
+        <div class="logo">
+            <a href="/"><img src="/assets/pctrs/logo.png" class="img-responsive" /></a>
+        </div>
+        <div class="inner-logo">
+            <a href="/"><img src="/assets/pctrs/inner_logo.png" class="img-responsive" /></a>
+        </div>
+        <div class="clearfix"></div>
+        <div id="menuToggle">
+
+            <label>Меню</label>
+
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <a href="{{ common_links.timetable }}" class="top-links worktime hidden-xs">Время работы</a>
+        <a href="{{ common_links.route }}" class="top-links route hidden-xs">Как добраться</a>
+        {#<a href="{{ common_links.excursions }}" class="top-links tours">Экскурсии</a>#}
+        <div class="lang">
+            <select>
+                <option value="rus">По русски</option>
+                <option value="eng">English</option>
+            </select>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>
+<div class="navigation row">
+    <div class="container">
+        <nav>
+            <ul class="gorizontal-menu">
+                {% for dep in root_deps %}
+                    <li{% if dep.id == article.id or dep.id == article.root_id %} class="active"{% endif %}><a href="{{ dep.url }}">{{ dep.title }}</a></li>
+                {% endfor %}
+            </ul>
+            <div class="clearfix"></div>
+        </nav>
+    </div>
+</div>
+
+<section class="main row">
+    <div class="top-menu-bgr"></div>
+
+    <main class="container">
+        <ul class="breadcrumbs">
+            {{ path | raw }}
+        </ul>
+
+        {{ content | raw}}
+
+        <div class="clearfix"></div>
+
+    </main>
+
+
+</section>
+
+
+<section class="index-contacts row">
+    <a href="#"><img src="/assets/pctrs/index_contacts.jpg" border="0" class="img-responsive full-width" /></a>
+</section>
+
+<footer class="container">
+    <div class="address">
+        {{ footer.col1 | raw}}
+    </div>
+
+    <div class="timetable">
+        {{ footer.col2 | raw}}
+    </div>
+
+    <div class="visitors">
+        <div class="socials">
+            <a href="#"><img src="/assets/pctrs/footer_vk_icon.png" border="0" /></a>
+            <a href="#"><img src="/assets/pctrs/footer_fb_icon.png" border="0" /></a>
+            <a href="#"><img src="/assets/pctrs/footer_tw_icon.png" border="0" /></a>
+            <a href="#"><img src="/assets/pctrs/footer_ok_icon.png" border="0" /></a>
+            <a href="#"><img src="/assets/pctrs/footer_gp_icon.png" border="0" /></a>
+        </div>
+        {{ footer.col3 | raw}}    </div>
+
+    <div class="height-20"></div>
+    <div class="height-20"></div>
+
+    <div class="copyright">
+        &copy;  Литературно-мемориальный музей Ф.М.Достоевского
+    </div>
+
+    <div class="design-by">
+        Дизайн сайта: <a href="http://in-design.ru" target="_blank">In-Design</a>
+    </div>
+
+    <div class="height-20"></div>
+
+</footer>
+
+<!-- SmartMenus jQuery plugin -->
+{#<script src="/assets/jvscrpts/vendor/jquery.smartmenus.js" type="text/javascript"></script>#}
+<script src="/assets/jvscrpts/main.js" type="text/javascript"></script>
+<script src="/assets/jvscrpts/menu.js" type="text/javascript"></script>
+<script src="/assets/jvscrpts/vendor/jquery.fancybox.min.js" type="text/javascript"></script>
+
+
+
+</body>
+</html>
