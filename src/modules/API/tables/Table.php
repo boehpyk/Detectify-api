@@ -75,6 +75,7 @@ class Table
                 WHERE 
                   TRIM(BOTH '\"' FROM pageTitle) RLIKE '^[!#$%&()*+,\-./:;<=>?@[\\\]^`{|}~]+'
                 ";
+
             $stmt = $this->app['db']->prepare($sql);
         }
         else {
